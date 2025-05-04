@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <title>Tienda Online</title>
+</head>
+<body>
+    <header>
+        <h1>TIENDA ONLINE</h1>
+        <nav>
+            <a href="/">Inicio</a>
+            <a href="/catalogo">Catálogo</a>
+            <a href="/clientes">Clientes</a>
+            <a href="/pedidos">Pedidos</a>
+        </nav>
+    </header>
+
+    <main>
+        {% if pagina == "inicio" %}
+            <div>
+                <h2>{{tienda}}</h2>
+                <h3>Bienvenido, {{nombre_admin}}</h3>
+                <p>Has inicido sesión el <strong>{{fecha}}</strong>.</p>
+            </div>
+
+
+        {% elif pagina == "catalogo" %}
+            <div id="pag-catalogo">
+                <h2>Catálogo de productos (Stock total: {{total_stock}})</h2>
+                <div id="contenedor-productos">
+
+                    {% for producto in listado_productos %}
+                        <div class="producto">
+                            <img src="{{producto.img_url}}" alt="{{producto.nombre}}">
+                            <h3>{{producto.nombre}}</h3>
+                            <span>Categoría: {{producto.categoria}}</span>
+
+                            {% if producto.stock == 0 %}
+                                <span>Stock: <strong style="color: red;">AGOTADO</strong></span>
+                            {% else %}
+                                <span>Stock: {{producto.stock}}, <strong style="color: green;">DISPONIBLE</strong></span>
+                            {% endif %}
+
+                            <span><strong>{{producto.precio}}€</strong></span>
+                        </div>
+                    {% endfor %}
+
+                </div>
+            </div>
+
+
+        {% elif pagina == "clientes" %}
+            <div id="pag-clientes">
+                <h2>Clientes (Activos: {{clientes_activos}}) (Cliente Top: {{cliente_top}})</h2>
+                <div id="contenedor-clientes">
+
+                    {% for cliente in listado_clientes %}
+                        <div class="cliente">
+                            <h3>Cliente: {{cliente.nombre}}</h3>
+                            <span>ID: {{cliente.id_cliente}}</span>
+                            <span>E-mail: {{cliente.email}}</span>
+
+                            {% if cliente.estado %}
+                                <span>Estado: Activo</span>
+                            {% else %}
+                                <span>Estado: Inactivo</span>
+                            {% endif %}
+
+                            <span>Número de pedidos: {{cliente.pedidos | length}}</span>
+                        </div>
+                    {% endfor %}
+
+                </div>
+            </div>
+
+
+        {% elif pagina == "pedidos" %}
+            <div id="pag-pedidos">
+                <h2>Pedidos (Ganancias Totales: {{suma_total}}€)</h2>
+                <div id="contenedor-pedidos">
+
+                    {% for cliente in listado_clientes %}
+                        {% for pedido in cliente.pedidos %}
+                            <div class="pedido">
+                                <h3>ID Pedido: {{pedido.id_pedido}}</h3>
+                                <span>ID Cliente: {{pedido.id_cliente}}</span>
+                                <span>Total: {{pedido.total}}€</span>
+                                <span>Fecha: {{pedido.fecha}}</span>
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+
+                </div>
+            </div>
+
+        {% endif %}
+    </main>
+    
+</body>
+</html>

@@ -1,0 +1,209 @@
+/* General */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f7f7f7;
+    color: #333;
+}
+
+h1 {
+    font-size: 40px;
+}
+
+h2, h3 {
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+}
+
+#pag-catalogo h2, #pag-clientes h2, #pag-pedidos h2 {
+    font-size: 33px;
+    margin-bottom: 40px;
+}
+
+/* Header */
+header {
+    background-color: #34495e;
+    padding: 1rem;
+    color: white;
+    text-align: center;
+}
+
+nav {
+    margin-top: 1rem;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 1rem;
+    font-weight: bold;
+    font-size: 26px;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+/* Main layout */
+main {
+    padding: 2rem;
+}
+
+/* Inicio - centrado y grande */
+main > div {
+    text-align: center;
+    margin: 0 auto;
+    max-width: 1800px;
+}
+
+main > div h2 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+main > div h3 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+main > div p {
+    font-size: 1.5rem;
+}
+
+/* Catálogo */
+#contenedor-productos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 1200px; /* esto limita cuánto crece en pantallas grandes */
+}
+
+.producto {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    text-align: center;
+    max-width: 100%;
+    min-height: 450px;
+}
+
+.producto img {
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-bottom: 0.7rem;
+}
+
+.producto h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.3rem;
+}
+
+.producto span {
+    display: block;
+    margin: 0.3rem 0;
+    font-size: 1.1rem;
+}
+
+/* Clientes */
+#contenedor-clientes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.cliente {
+    background-color: #fff;
+    padding: 1.5rem;
+    border-left: 8px solid #2980b9;
+    border-radius: 8px;
+    width: 400px;
+    box-shadow: 0 0 8px rgba(0,0,0,0.1);
+}
+
+.cliente h3 {
+    font-size: 1.4rem;
+    margin-bottom: 0.7rem;
+}
+
+.cliente span {
+    display: block;
+    font-size: 1.05rem;
+    color: #555;
+    margin: 0.3rem 0;
+    padding-left: 5px;
+}
+
+/* Pedidos */
+#contenedor-pedidos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.pedido {
+    background-color: #fff;
+    padding: 1.5rem;
+    border-left: 8px solid #27ae60;
+    border-radius: 8px;
+    width: 400px;
+    box-shadow: 0 0 8px rgba(0,0,0,0.1);
+}
+
+.pedido h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+}
+
+.pedido span {
+    display: block;
+    font-size: 1.05rem;
+    color: #555;
+    margin: 0.3rem 0;
+    padding-left: 5px;
+}
+
+.cliente,
+.pedido {
+    flex: 1 1 300px;
+    max-width: 360px;
+    margin: 0 0.5rem 1rem 0;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    nav a {
+        display: block;
+        margin: 0.5rem 0;
+    }
+
+    #contenedor-clientes,
+    #contenedor-productos,
+    #contenedor-pedidos {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .cliente, .pedido, .producto {
+        width: 90%;
+    }
+
+    main > div h2 {
+        font-size: 2.5rem;
+    }
+
+    main > div h3 {
+        font-size: 1.6rem;
+    }
+
+    main > div p {
+        font-size: 1.2rem;
+    }
+}
