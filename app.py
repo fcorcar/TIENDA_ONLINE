@@ -1,6 +1,7 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect
 from main import admin, listado_productos, listado_clientes
 from datetime import date
+from models.productos import Producto
 
 app = Flask(__name__)
 
@@ -39,6 +40,24 @@ def clientes():
 def pedidos():
     suma_total = sum(pedido.total for cliente in listado_clientes for pedido in cliente.pedidos)        
     return render_template("dashboard.html", pagina="pedidos", listado_clientes=listado_clientes, suma_total=suma_total)
+
+@app.route("/añadir-producto", methods=["GET", "POST"])
+def añadir_producto():   
+    if request.method == "POST":
+        id_producto = 0
+        nombre_producto = request.form["nombre"]
+        precio_producto = float(request.form["precio"])
+        stock_producto = int(request.form["stock"])
+        categoria_producto = request.form["categoria"]
+        imagen_producto = request.form["url_imagen"]
+
+        if listado_productos: id_producto = listado_productos[-1].id_producto + 1
+        else: id_producto = 1
+            
+        listado_productos.append(Producto(id_producto, nombre_producto, precio_producto, stock_producto, categoria_producto, imagen_producto))
+
+        return redirect("/catalogo")
+    return render_template("dashboard.html", pagina="añadir-producto")
 
 
 if __name__ == "__main__":

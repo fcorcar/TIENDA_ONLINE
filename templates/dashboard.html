@@ -14,6 +14,7 @@
             <a href="/catalogo">Catálogo</a>
             <a href="/clientes">Clientes</a>
             <a href="/pedidos">Pedidos</a>
+            <a href="/añadir-producto">Añadir Producto</a>
         </nav>
     </header>
 
@@ -91,6 +92,34 @@
                             </div>
                         {% endfor %}
                     {% endfor %}
+
+                </div>
+            </div>
+
+        
+        {% elif pagina == "añadir-producto" %}
+            <div id="pag-añadir-producto">
+                <h2>Añadir Producto</h2>
+                <div id="contenedor-formulario">
+
+                    <form id="formulario-añadir" method="POST">
+                        <label for="nombre">Nombre</label>
+                        <input type="text" name="nombre" id="nombre" placeholder="Nombre del producto" required>
+
+                        <label for="precio">Precio</label>
+                        <input type="number" name="precio" id="precio" placeholder="Precio del producto" step="0.01" min="0" required>
+
+                        <label for="stock">Stock</label>
+                        <input type="number" name="stock" id="stock" placeholder="Stock del producto" min="0" required>
+
+                        <label for="categoria">Categoría</label>
+                        <input type="text" name="categoria" id="categoria" placeholder="Categoría del producto" required>
+
+                        <label for="url_imagen">URL de la imagen</label>
+                        <input type="text" name="url_imagen" id="url_imagen" placeholder="Imagen del producto" required>
+
+                        <input type="submit" id="añadir-producto" value="Añadir producto">
+                    </form>
 
                 </div>
             </div>
