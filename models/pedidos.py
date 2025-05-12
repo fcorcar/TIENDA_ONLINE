@@ -5,7 +5,7 @@ class Pedido:
         self.__id_pedido = id_pedido
         self.__id_cliente = id_cliente
         self.__lista_productos = lista_productos
-        self.__total = sum(producto.precio for producto in lista_productos)
+        self.__total = sum(producto["precio"] for producto in lista_productos)
         self.__fecha = date.today()
 
     @property

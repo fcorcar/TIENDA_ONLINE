@@ -26,11 +26,13 @@
 TIENDA_ONLINE/
 ├── app.py
 ├── main.py
+├── settings.py
 ├── models/
 │   ├── basedatos.py
 │   ├── clientes.py
 │   ├── pedidos.py
-│   └── administrador.py
+│   ├── administrador.py
+│   └── base_datos.py
 ├── static/
 │   └── css/
 │       └── style.css
