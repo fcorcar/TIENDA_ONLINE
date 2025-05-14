@@ -8,6 +8,7 @@ class Producto:
         self.__categoria = categoria
         self.__img_url = img_url
 
+
     @property
     def id_producto(self):
         return self.__id_producto
@@ -55,6 +56,19 @@ class Producto:
     @img_url.setter
     def img_url(self, valor):
         self.__img_url = valor
+
+    
+    @property
+    def formato_dict(self):
+        return {
+            "nombre": self.nombre,
+            "precio": self.precio,
+            "stock": self.stock,
+            "categoria": self.categoria,
+            "imagen": self.img_url
+        }
+    
+
 
 
     

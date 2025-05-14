@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %} Productos {% endblock %}
+
+{% block main %}
+    <div id="pag-catalogo">
+        <h2>Catálogo de productos (Stock total: {{total_stock}})</h2>
+        <div id="contenedor-productos">
+
+            {% for producto in listado_productos %}
+                <div class="producto">
+                    <img src="{{producto['imagen']}}" alt="{{producto.nombre}}">
+                    <h3>{{producto["nombre"]}}</h3>
+                    <span>Categoría: {{producto["categoria"]}}</span>
+
+                    {% if producto["stock"] == 0 %}
+                        <span>Stock: <strong style="color: red;">AGOTADO</strong></span>
+                    {% else %}
+                        <span>Stock: {{producto["stock"]}}, <strong style="color: green;">DISPONIBLE</strong></span>
+                    {% endif %}
+
+                    <span><strong>{{producto["precio"]}}€</strong></span>
+                </div>
+            {% endfor %}
+
+        </div>
+    </div>
+{% endblock %}
