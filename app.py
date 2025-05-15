@@ -64,10 +64,30 @@ def producto_especifico(id_producto):
         return render_template("404.html"), 404
 
 
-
-@app.route("/registrar-usuarios")
+@app.route("/registrar-usuarios", methods=["GET", "POST"])
 def registrar_usuarios():
-    return render_template("dashboard.html")
+    if request.method == "POST":
+        producto = Producto(
+            0, 
+            request.form["nombre"], 
+            float(request.form["precio"]), 
+            int(request.form["stock"]), 
+            request.form["categoria"], 
+            request.form["url_imagen"]
+        )
+
+        exito = base_datos.insertar("productos", producto.formato_dict)
+        mensaje = ""
+
+        if exito: mensaje = "Producto añadido con éxito."
+        else: mensaje = "El producto no se ha podido añadir."
+
+        return render_template("añadir_producto.html", mensaje=mensaje)
+
+    return render_template("añadir_producto.html")
+
+
+
 
 @app.route("/usuarios")
 def usuarios():
