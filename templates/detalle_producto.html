@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %} Producto {% endblock %} 
+
+{% block main %}
+    <div id="pag-producto-especifico">
+        <div id="contenedor-producto">
+
+            <div class="producto_especifico">
+                <img src="{{producto.img_url}}" alt="{{producto.nombre}}">
+                <h3>{{producto.nombre}}</h3>
+                <span>Categoría: {{producto.categoria}}</span>
+
+                {% if producto.stock == 0 %}
+                    <span>Stock: <strong style="color: red;">AGOTADO</strong></span>
+                {% else %}
+                    <span>Stock: {{producto.stock}}, <strong style="color: green;">DISPONIBLE</strong></span>
+                {% endif %}
+
+                <span><strong>{{producto.precio}}€</strong></span>
+            </div>
+        </div>
+    </div>
+{% endblock %}

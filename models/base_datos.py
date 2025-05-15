@@ -1,6 +1,7 @@
 ######################## IMPORTACIONES ########################
 from settings import obtener_bd
 from pymongo import MongoClient
+from models.productos import Producto
 
 
 
@@ -33,8 +34,21 @@ class BaseDatos:
             return False
 
 
-    def buscar(self, nombre_tabla:str):
-        return list(self.db[nombre_tabla].find())
+    def obtener(self, nombre_tabla:str):
+        listado = []
+
+        for dict in list(self.db[nombre_tabla].find()):
+            listado.append(Producto(
+                dict["_id"], 
+                dict["nombre"], 
+                dict["precio"], 
+                dict["stock"], 
+                dict["categoria"], 
+                dict["imagen"]
+                )
+            )
+
+        return listado
     
 
 ######################## INSTANCIAS ########################

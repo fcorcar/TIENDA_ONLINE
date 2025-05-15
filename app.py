@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect
-from main import admin, listado_clientes
+from main import admin
 from datetime import date
 from models.productos import Producto
 from models.base_datos import base_datos
@@ -43,10 +43,23 @@ def añadir_producto():
 
 @app.route("/productos")
 def productos():
-    listado_productos = base_datos.buscar("productos")
+    listado_productos = base_datos.obtener("productos")
 
-    total_stock = sum(producto["stock"] for producto in listado_productos)
+    total_stock = sum(producto.stock for producto in listado_productos)
     return render_template("productos.html", listado_productos=listado_productos, total_stock=total_stock)
+
+
+@app.route("/productos/<id_producto>")
+def producto_especifico(id_producto):
+    listado_productos = base_datos.obtener("productos")
+    producto = ""
+
+    for prod in listado_productos:
+        if prod.id_producto == id_producto:
+            return render_template("detalle_producto.html", producto=prod)
+    
+    else:
+        return "No se encontro"
 
 
 
