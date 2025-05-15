@@ -6,6 +6,9 @@ from models.base_datos import base_datos
 
 app = Flask(__name__)
 
+@app.errorhandler(404)
+def error404(error):
+    return render_template("404.html"), 404
 
 @app.route("/")
 def panel_control():
@@ -52,14 +55,13 @@ def productos():
 @app.route("/productos/<id_producto>")
 def producto_especifico(id_producto):
     listado_productos = base_datos.obtener("productos")
-    producto = ""
 
     for prod in listado_productos:
-        if prod.id_producto == id_producto:
+        if str(prod.id_producto) == id_producto.strip():
             return render_template("detalle_producto.html", producto=prod)
     
     else:
-        return "No se encontro"
+        return render_template("404.html"), 404
 
 
 
