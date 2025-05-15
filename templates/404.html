@@ -4,8 +4,7 @@
 
 {% block main %}
     <div id="pag-404">
-        <div id="contenedor-404">
-            <h2>Página no encontrada</h2>
-        </div>
+        <img src="{{ url_for('static', filename='images/404.gif') }}" alt="GIF" width="350" />
+        <h2>PÁGINA NO ENCONTRADA</h2>
     </div>
 {% endblock %}

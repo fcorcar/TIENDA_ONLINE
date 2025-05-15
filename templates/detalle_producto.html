@@ -5,19 +5,20 @@
 {% block main %}
     <div id="pag-producto-especifico">
         <div id="contenedor-producto">
-
-            <div class="producto_especifico">
+            <div class="producto-imagen">
                 <img src="{{producto.img_url}}" alt="{{producto.nombre}}">
+            </div>
+            <div class="producto-detalles">
                 <h3>{{producto.nombre}}</h3>
-                <span>Categoría: {{producto.categoria}}</span>
+                <p><strong>Categoría:</strong> {{producto.categoria}}</p>
 
                 {% if producto.stock == 0 %}
-                    <span>Stock: <strong style="color: red;">AGOTADO</strong></span>
+                    <p><strong>Stock:</strong> <span class="stock-agotado">AGOTADO</span></p>
                 {% else %}
-                    <span>Stock: {{producto.stock}}, <strong style="color: green;">DISPONIBLE</strong></span>
+                    <p><strong>Stock:</strong> {{producto.stock}}, <span class="stock-disponible">DISPONIBLE</span></p>
                 {% endif %}
 
-                <span><strong>{{producto.precio}}€</strong></span>
+                <p class="precio">{{producto.precio}} €</p>
             </div>
         </div>
     </div>

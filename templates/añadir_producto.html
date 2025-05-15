@@ -4,20 +4,17 @@
 
 {% block main %}
     {% if mensaje %}
-        <div id="pag-añadir-producto">
-            <div>
-                <p>{{ mensaje }}</p>
-                <a href="{{ url_for('añadir_producto') }}">Aceptar</a>
-            </div>
+        <div class="mensaje-box">
+            <p>{{ mensaje }}</p>
+            <a href="{{ url_for('añadir_producto') }}">Aceptar</a>
         </div>
         
 
     {% else %}
-        <div id="pag-añadir-producto">
+        <div>
             <h2>Añadir Producto</h2>
-            <div id="contenedor-formulario">
-
-                <form id="formulario-añadir" method="POST" action="/añadir-producto">
+            <div class="form-container">
+                <form method="POST" action="/añadir-producto">
                     <label for="nombre">Nombre</label>
                     <input type="text" name="nombre" id="nombre" placeholder="Nombre del producto" required>
 
@@ -33,9 +30,8 @@
                     <label for="url_imagen">URL de la imagen</label>
                     <input type="text" name="url_imagen" id="url_imagen" placeholder="Imagen del producto" required>
 
-                    <input type="submit" id="añadir-producto" value="Añadir producto">
+                    <input type="submit" value="Añadir producto">
                 </form>
-
             </div>
         </div>
     {% endif %}

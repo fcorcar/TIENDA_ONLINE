@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}" type="image/x-icon">
     <title>{% block title %} Tienda Online {% endblock %}</title>
 </head>
 
 <body>
     <header>
-        <h1>TIENDA ONLINE</h1>
+        <h1>Tecno Market</h1>
         <nav>
             <a href="{{ url_for('panel_control') }}">Panel</a>
             <a href="{{ url_for('añadir_producto') }}">Añadir producto</a>
@@ -20,9 +21,7 @@
     </header>
 
     <main>
-        {% block main %}
-            Contenido 
-        {% endblock %}
+        {% block main %} Contenido {% endblock %}
     </main>
 
     <footer>
