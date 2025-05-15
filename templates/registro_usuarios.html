@@ -14,26 +14,20 @@
 
     {% else %}
         <div id="pag-añadir-usuario">
-            <h2>Añadir Producto</h2>
+            <h2>Registro de usuario</h2>
             <div id="contenedor-formulario-usuario">
 
                 <form id="formulario-añadir-usuario" method="POST" action="/registrar-usuarios">
                     <label for="nombre">Nombre</label>
-                    <input type="text" name="nombre" id="nombre" placeholder="Nombre del producto" required>
+                    <input type="text" name="nombre" id="nombre" placeholder="Nombre del usuario" required>
 
-                    <label for="precio">Precio</label>
-                    <input type="number" name="precio" id="precio" placeholder="Precio del producto" step="0.01" min="0" required>
+                    <label for="email">Email</label>
+                    <input type="email" name="email" id="email" placeholder="Email del usuario" required>
 
-                    <label for="stock">Stock</label>
-                    <input type="number" name="stock" id="stock" placeholder="Stock del producto" min="0" required>
+                    <label for="contraseña">Contraseña</label>
+                    <input type="password" name="contraseña" id="contraseña" placeholder="Contraseña del usuario" required>
 
-                    <label for="categoria">Categoría</label>
-                    <input type="text" name="categoria" id="categoria" placeholder="Categoría del producto" required>
-
-                    <label for="url_imagen">URL de la imagen</label>
-                    <input type="text" name="url_imagen" id="url_imagen" placeholder="Imagen del producto" required>
-
-                    <input type="submit" id="añadir-producto" value="Añadir producto">
+                    <input type="submit" id="añadir-usuario" value="Registrar usuario">
                 </form>
 
             </div>

@@ -1,5 +1,5 @@
 from models.administrador import Administrador
-from models.clientes import Cliente
+from models.usuarios import Usuario
 from models.base_datos import base_datos
 
 admin = Administrador("Francisco", "TecnoMarket")

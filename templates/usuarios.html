@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %} Usuarios {% endblock %}
+
+{% block main %}
+    <div id="pag-usuarios">
+        <h2>Usuarios (Activos: {{usuarios_activos}}) (Usuario Top: {{usuario_top}})</h2>
+        <div id="contenedor-usuarios">
+
+            {% for usuario in listado_usuarios %}
+                <div class="usuario">
+                    <h3>Usuario: {{usuario.nombre}}</h3>
+                    <span>ID: {{usuario.id_usuario}}</span>
+                    <span>E-mail: {{usuario.email}}</span>
+                    <span>Fecha registro: {{usuario.fecha_registro|string | truncate(10, False, '')}}</span>
+
+                    {% if usuario.estado %}
+                        <span>Estado: Activo</span>
+                    {% else %}
+                        <span>Estado: Inactivo</span>
+                    {% endif %}
+
+                    <span>Número de pedidos: {{usuario.pedidos | length}}</span>
+                </div>
+            {% endfor %}
+
+        </div>
+    </div>
+{% endblock %}

@@ -1,7 +1,8 @@
 from flask import Flask, render_template, request, redirect
 from main import admin
-from datetime import date
+from datetime import date, datetime
 from models.productos import Producto
+from models.usuarios import Usuario
 from models.base_datos import base_datos
 
 app = Flask(__name__)
@@ -46,7 +47,18 @@ def añadir_producto():
 
 @app.route("/productos")
 def productos():
-    listado_productos = base_datos.obtener("productos")
+    listado_productos = []
+
+    for dict in base_datos.obtener("productos"):
+        listado_productos.append(Producto(
+            dict["_id"], 
+            dict["nombre"], 
+            dict["precio"], 
+            dict["stock"], 
+            dict["categoria"], 
+            dict["imagen"]
+            )
+        )
 
     total_stock = sum(producto.stock for producto in listado_productos)
     return render_template("productos.html", listado_productos=listado_productos, total_stock=total_stock)
@@ -54,7 +66,18 @@ def productos():
 
 @app.route("/productos/<id_producto>")
 def producto_especifico(id_producto):
-    listado_productos = base_datos.obtener("productos")
+    listado_productos = []
+
+    for dict in base_datos.obtener("productos"):
+        listado_productos.append(Producto(
+            dict["_id"], 
+            dict["nombre"], 
+            dict["precio"], 
+            dict["stock"], 
+            dict["categoria"], 
+            dict["imagen"]
+            )
+        )
 
     for prod in listado_productos:
         if str(prod.id_producto) == id_producto.strip():
@@ -67,31 +90,53 @@ def producto_especifico(id_producto):
 @app.route("/registrar-usuarios", methods=["GET", "POST"])
 def registrar_usuarios():
     if request.method == "POST":
-        producto = Producto(
+        usuario = Usuario(
             0, 
             request.form["nombre"], 
-            float(request.form["precio"]), 
-            int(request.form["stock"]), 
-            request.form["categoria"], 
-            request.form["url_imagen"]
+            request.form["email"], 
+            request.form["contraseña"],
+            datetime.now()
         )
 
-        exito = base_datos.insertar("productos", producto.formato_dict)
+        exito = base_datos.insertar("usuarios", usuario.formato_dict)
         mensaje = ""
 
-        if exito: mensaje = "Producto añadido con éxito."
-        else: mensaje = "El producto no se ha podido añadir."
+        if exito: mensaje = "Usuario registrado con éxito."
+        else: mensaje = "El usuario no se ha podido registrar."
 
-        return render_template("añadir_producto.html", mensaje=mensaje)
+        return render_template("registro_usuarios.html", mensaje=mensaje)
 
-    return render_template("añadir_producto.html")
+    return render_template("registro_usuarios.html")
 
 
 
 
 @app.route("/usuarios")
 def usuarios():
-    return render_template("dashboard.html")
+    listado_usuarios = []
+
+    for dict in base_datos.obtener("usuarios"):
+        listado_usuarios.append(Usuario(
+            dict["_id"], 
+            dict["nombre"], 
+            dict["email"], 
+            dict["contraseña"], 
+            dict["fecha_registro"]
+            )
+        )
+
+    usuarios_activos = sum(1 for usuario in listado_usuarios if usuario.estado)
+
+    usuario_top = ""
+    max_pedidos = -1
+
+    for usuario in listado_usuarios:
+        num_pedidos = len(usuario.pedidos)
+        if num_pedidos > max_pedidos:
+            max_pedidos = num_pedidos
+            usuario_top = usuario.nombre
+
+    return render_template("usuarios.html", listado_usuarios=listado_usuarios, usuarios_activos=usuarios_activos, usuario_top=usuario_top)
 
 
 # @app.route("/")

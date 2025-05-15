@@ -35,20 +35,7 @@ class BaseDatos:
 
 
     def obtener(self, nombre_tabla:str):
-        listado = []
-
-        for dict in list(self.db[nombre_tabla].find()):
-            listado.append(Producto(
-                dict["_id"], 
-                dict["nombre"], 
-                dict["precio"], 
-                dict["stock"], 
-                dict["categoria"], 
-                dict["imagen"]
-                )
-            )
-
-        return listado
+        return list(self.db[nombre_tabla].find())
     
 
 ######################## INSTANCIAS ########################
