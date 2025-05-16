@@ -25,14 +25,7 @@ def panel_control():
 @app.route("/añadir-producto", methods=["GET", "POST"])
 def añadir_producto():
     if request.method == "POST":
-        producto = Producto(
-            0, 
-            request.form["nombre"], 
-            float(request.form["precio"]), 
-            int(request.form["stock"]), 
-            request.form["categoria"], 
-            request.form["url_imagen"]
-        )
+        producto = Producto(0,**request.form)
 
         exito = base_datos.insertar("productos", producto.formato_dict)
         mensaje = ""
@@ -47,18 +40,7 @@ def añadir_producto():
 
 @app.route("/productos")
 def productos():
-    listado_productos = []
-
-    for dict in base_datos.obtener("productos"):
-        listado_productos.append(Producto(
-            dict["_id"], 
-            dict["nombre"], 
-            dict["precio"], 
-            dict["stock"], 
-            dict["categoria"], 
-            dict["imagen"]
-            )
-        )
+    listado_productos = base_datos.obtener("productos", Producto)
 
     total_stock = sum(producto.stock for producto in listado_productos)
     return render_template("productos.html", listado_productos=listado_productos, total_stock=total_stock)
@@ -66,18 +48,7 @@ def productos():
 
 @app.route("/productos/<id_producto>")
 def producto_especifico(id_producto):
-    listado_productos = []
-
-    for dict in base_datos.obtener("productos"):
-        listado_productos.append(Producto(
-            dict["_id"], 
-            dict["nombre"], 
-            dict["precio"], 
-            dict["stock"], 
-            dict["categoria"], 
-            dict["imagen"]
-            )
-        )
+    listado_productos = base_datos.obtener("productos", Producto)
 
     for prod in listado_productos:
         if str(prod.id_producto) == id_producto.strip():
@@ -90,13 +61,7 @@ def producto_especifico(id_producto):
 @app.route("/registrar-usuarios", methods=["GET", "POST"])
 def registrar_usuarios():
     if request.method == "POST":
-        usuario = Usuario(
-            0, 
-            request.form["nombre"], 
-            request.form["email"], 
-            request.form["contraseña"],
-            datetime.now()
-        )
+        usuario = Usuario(0, datetime.now(),**request.form)
 
         exito = base_datos.insertar("usuarios", usuario.formato_dict)
         mensaje = ""
@@ -113,17 +78,7 @@ def registrar_usuarios():
 
 @app.route("/usuarios")
 def usuarios():
-    listado_usuarios = []
-
-    for dict in base_datos.obtener("usuarios"):
-        listado_usuarios.append(Usuario(
-            dict["_id"], 
-            dict["nombre"], 
-            dict["email"], 
-            dict["contraseña"], 
-            dict["fecha_registro"]
-            )
-        )
+    listado_usuarios = base_datos.obtener("usuarios", Usuario)
 
     usuarios_activos = sum(1 for usuario in listado_usuarios if usuario.estado)
 

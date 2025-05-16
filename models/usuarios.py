@@ -2,7 +2,7 @@ from models.pedidos import Pedido
 
 class Usuario:
 
-    def __init__(self, id_usuario:int, nombre:str, email:str, contraseña:str, fecha_registro:str):
+    def __init__(self, id_usuario:int, fecha_registro:str, nombre:str, email:str, contraseña:str):
         self.__id_usuario = id_usuario
         self.__nombre = nombre
         self.__email = email
@@ -74,8 +74,8 @@ class Usuario:
     @property
     def formato_dict(self): #Eso es lo que se sube a la bd
         return {
+            "fecha_registro": self.fecha_registro,
             "nombre": self.nombre,
             "email": self.email,
-            "contraseña": self.contraseña,
-            "fecha_registro": self.fecha_registro
+            "contraseña": self.contraseña
         }

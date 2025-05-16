@@ -16,7 +16,7 @@
                     {% else %}
                         <p><strong>Stock:</strong> {{producto.stock}}, <span class="stock-disponible">DISPONIBLE</span></p>
                     {% endif %}
-                    <p class="precio"><strong>{{producto.precio}} €</strong></p>
+                    <p class="precio"><strong>{{producto.precio_format}} €</strong></p>
                 </a>
             {% endfor %}
         </div>

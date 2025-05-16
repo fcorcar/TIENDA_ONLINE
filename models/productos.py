@@ -3,8 +3,8 @@ class Producto:
     def __init__(self, id_producto:int, nombre:str, precio:float, stock:int, categoria:str, img_url:str):
         self.__id_producto = id_producto
         self.__nombre = nombre
-        self.__precio = precio
-        self.__stock = stock
+        self.__precio = float(precio)
+        self.__stock = int(stock)
         self.__categoria = categoria
         self.__img_url = img_url
 
@@ -25,6 +25,10 @@ class Producto:
     def nombre(self, valor):
         self.__nombre = valor
 
+    @property
+    def precio_format(self):
+        return f"{self.__precio:.2f}"
+    
     @property
     def precio(self):
         return self.__precio

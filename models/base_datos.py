@@ -34,8 +34,8 @@ class BaseDatos:
             return False
 
 
-    def obtener(self, nombre_tabla:str):
-        return list(self.db[nombre_tabla].find())
+    def obtener(self, nombre_tabla:str, clase:object):
+        return [clase(*diccionario.values()) for diccionario in list(self.db[nombre_tabla].find())]
     
 
 ######################## INSTANCIAS ########################
