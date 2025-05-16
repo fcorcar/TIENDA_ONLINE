@@ -3,9 +3,17 @@
 {% block title %} Panel de Control {% endblock %}
 
 {% block main %}
-    <div id="panel">
-        <h2>{{tienda}}</h2>
-        <h3>Bienvenido, {{nombre_admin}}</h3>
-        <p>Has iniciado sesión el <strong>{{fecha}}</strong>.</p>
+    <div>
+        <div id="panel">
+            <h2>{{tienda}}</h2>
+            <h3>Bienvenido, {{nombre_admin}}</h3>
+            <p>Has iniciado sesión el <strong>{{fecha}}</strong>.</p>
+        </div>
+
+        <br><br>
+        {% include 'partials/_productos.html' %}
+
+        <br><br>
+        {% include 'partials/_usuarios.html' %}
     </div>
 {% endblock %}

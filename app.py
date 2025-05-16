@@ -13,14 +13,20 @@ def error404(error):
 
 @app.route("/")
 def panel_control():
+    # Bienvenida
     kwargs = {
         "nombre_admin": admin.nombre,
         "tienda": admin.tienda,
         "fecha": date.today()
     }
-    
-    return render_template("dashboard.html", **kwargs)
 
+    # Productos
+    listado_productos = base_datos.obtener("productos", Producto)
+
+    # Usuarios
+    listado_usuarios = base_datos.obtener("usuarios", Usuario)
+
+    return render_template("dashboard.html", **kwargs, titulo_pr="Productos añadidos recientemente", listado_productos=listado_productos, titulo_us="Usuarios registrados recientemente", listado_usuarios=listado_usuarios)
 
 @app.route("/añadir-producto", methods=["GET", "POST"])
 def añadir_producto():
@@ -41,9 +47,9 @@ def añadir_producto():
 @app.route("/productos")
 def productos():
     listado_productos = base_datos.obtener("productos", Producto)
-
     total_stock = sum(producto.stock for producto in listado_productos)
-    return render_template("productos.html", listado_productos=listado_productos, total_stock=total_stock)
+
+    return render_template("productos.html", titulo_pr=f"Catálogo de productos (Stock total: {total_stock})", listado_productos=listado_productos)
 
 
 @app.route("/productos/<id_producto>")
@@ -74,8 +80,6 @@ def registrar_usuarios():
     return render_template("registro_usuarios.html")
 
 
-
-
 @app.route("/usuarios")
 def usuarios():
     listado_usuarios = base_datos.obtener("usuarios", Usuario)
@@ -91,7 +95,7 @@ def usuarios():
             max_pedidos = num_pedidos
             usuario_top = usuario.nombre
 
-    return render_template("usuarios.html", listado_usuarios=listado_usuarios, usuarios_activos=usuarios_activos, usuario_top=usuario_top)
+    return render_template("usuarios.html", titulo_us=f"Usuarios (Activos: {usuarios_activos}) (Usuario Top: {usuario_top})", listado_usuarios=listado_usuarios)
 
 
 # @app.route("/")

@@ -2,23 +2,4 @@
 
 {% block title %} Productos {% endblock %}
 
-{% block main %}
-    <div id="pag-catalogo">
-        <h2>Catálogo de productos (Stock total: {{total_stock}})</h2>
-        <div id="contenedor-productos">
-            {% for producto in listado_productos %}
-                <a class="producto" href="{{ url_for('producto_especifico', id_producto=producto.id_producto) }}">
-                    <img src="{{producto.img_url}}" alt="{{producto.nombre}}">
-                    <h3>{{producto.nombre}}</h3>
-                    <p><strong>Categoría:</strong> {{producto.categoria}}</p>
-                    {% if producto.stock == 0 %}
-                        <p><strong>Stock:</strong> <span class="stock-agotado">AGOTADO</span></p>
-                    {% else %}
-                        <p><strong>Stock:</strong> {{producto.stock}}, <span class="stock-disponible">DISPONIBLE</span></p>
-                    {% endif %}
-                    <p class="precio"><strong>{{producto.precio_format}} €</strong></p>
-                </a>
-            {% endfor %}
-        </div>
-    </div>
-{% endblock %}
+{% block main %} {% include 'partials/_productos.html' %} {% endblock %}

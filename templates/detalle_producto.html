@@ -2,24 +2,4 @@
 
 {% block title %} {{producto.nombre}} {% endblock %} 
 
-{% block main %}
-    <div id="pag-producto-especifico">
-        <div id="contenedor-producto">
-            <div class="producto-imagen">
-                <img src="{{producto.img_url}}" alt="{{producto.nombre}}">
-            </div>
-            <div class="producto-detalles">
-                <h3>{{producto.nombre}}</h3>
-                <p><strong>Categoría:</strong> {{producto.categoria}}</p>
-
-                {% if producto.stock == 0 %}
-                    <p><strong>Stock:</strong> <span class="stock-agotado">AGOTADO</span></p>
-                {% else %}
-                    <p><strong>Stock:</strong> {{producto.stock}}, <span class="stock-disponible">DISPONIBLE</span></p>
-                {% endif %}
-
-                <p class="precio">{{producto.precio}} €</p>
-            </div>
-        </div>
-    </div>
-{% endblock %}
+{% block main %} {% include 'partials/_detalle_producto.html' %} {% endblock %}

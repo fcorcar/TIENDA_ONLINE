@@ -2,30 +2,4 @@
 
 {% block title %} Registrar usuario {% endblock %}
 
-{% block main %}
-    {% if mensaje %}
-        <div class="mensaje-box">
-            <p>{{ mensaje }}</p>
-            <a href="{{ url_for('registrar_usuarios') }}">Aceptar</a>
-        </div>
-        
-    {% else %}
-        <div>
-            <h2>Registro de usuario</h2>
-            <div class="form-container">
-                <form method="POST" action="/registrar-usuarios">
-                    <label for="nombre">Nombre</label>
-                    <input type="text" name="nombre" id="nombre" placeholder="Nombre del usuario" required>
-
-                    <label for="email">Email</label>
-                    <input type="email" name="email" id="email" placeholder="Email del usuario" required>
-
-                    <label for="contraseña">Contraseña</label>
-                    <input type="password" name="contraseña" id="contraseña" placeholder="Contraseña del usuario" required>
-
-                    <input type="submit" value="Registrar usuario">
-                </form>
-            </div>
-        </div>
-    {% endif %}
-{% endblock %}
+{% block main %} {% include 'partials/_registro_usuarios.html' %} {% endblock %}
