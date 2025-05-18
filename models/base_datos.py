@@ -1,6 +1,6 @@
 ######################## IMPORTACIONES ########################
 from settings import obtener_bd
-from pymongo import MongoClient
+from pymongo import MongoClient, DESCENDING
 from models.productos import Producto
 
 
@@ -34,9 +34,12 @@ class BaseDatos:
             return False
 
 
-    def obtener(self, nombre_tabla:str, clase:object):
-        return [clase(*diccionario.values()) for diccionario in list(self.db[nombre_tabla].find())]
+    def obtener(self, nombre_tabla:str, clase:object, filtro: dict = None):
+        return [clase(*diccionario.values()) for diccionario in list(self.db[nombre_tabla].find(filtro))]
     
+
+    def obtener_ultimos(self, nombre_tabla:str, clase:object, num:int):
+        return [clase(*diccionario.values()) for diccionario in list(self.db[nombre_tabla].find().sort('_id', DESCENDING).limit(num))]
 
 ######################## INSTANCIAS ########################
 base_datos = BaseDatos(obtener_bd("DB"), "TIENDA_ONLINE")

@@ -4,6 +4,7 @@ from datetime import date, datetime
 from models.productos import Producto
 from models.usuarios import Usuario
 from models.base_datos import base_datos
+from models.pedidos import Pedido
 
 app = Flask(__name__)
 
@@ -21,10 +22,10 @@ def panel_control():
     }
 
     # Productos
-    listado_productos = base_datos.obtener("productos", Producto)
+    listado_productos = base_datos.obtener_ultimos("productos", Producto, 6)
 
     # Usuarios
-    listado_usuarios = base_datos.obtener("usuarios", Usuario)
+    listado_usuarios = base_datos.obtener_ultimos("usuarios", Usuario, 3)
 
     return render_template("dashboard.html", **kwargs, titulo_pr="Productos añadidos recientemente", listado_productos=listado_productos, titulo_us="Usuarios registrados recientemente", listado_usuarios=listado_usuarios)
 
@@ -87,16 +88,22 @@ def usuarios():
     usuarios_activos = sum(1 for usuario in listado_usuarios if usuario.estado)
 
     usuario_top = ""
-    max_pedidos = -1
+    # max_pedidos = -1
 
-    for usuario in listado_usuarios:
-        num_pedidos = len(usuario.pedidos)
-        if num_pedidos > max_pedidos:
-            max_pedidos = num_pedidos
-            usuario_top = usuario.nombre
+    # for usuario in listado_usuarios:
+    #     num_pedidos = len(usuario.pedidos)
+    #     if num_pedidos > max_pedidos:
+    #         max_pedidos = num_pedidos
+    #         usuario_top = usuario.nombre
 
     return render_template("usuarios.html", titulo_us=f"Usuarios (Activos: {usuarios_activos}) (Usuario Top: {usuario_top})", listado_usuarios=listado_usuarios)
 
+
+@app.route("/pedidos")
+def pedidos():
+    listado_pedidos = base_datos.obtener("pedidos", Pedido)
+
+    return render_template("pedidos.html", titulo_us=f"Pedidos", listado_pedidos=listado_pedidos)
 
 # @app.route("/")
 # def inicio():

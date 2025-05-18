@@ -1,12 +1,12 @@
 from datetime import date
 
 class Pedido:
-    def __init__(self, id_pedido:int, id_cliente:int, lista_productos:list):
+    def __init__(self, id_pedido:int, id_usuario:int, lista_productos:list, fecha:str):
         self.__id_pedido = id_pedido
-        self.__id_cliente = id_cliente
+        self.__id_usuario = id_usuario
         self.__lista_productos = lista_productos
-        self.__total = sum(producto["precio"] for producto in lista_productos)
-        self.__fecha = date.today()
+        # self.__total = sum(producto["precio"] for producto in lista_productos)
+        self.__fecha = fecha
 
     @property
     def id_pedido(self):
@@ -17,12 +17,12 @@ class Pedido:
         self.__id_pedido = valor
 
     @property
-    def id_cliente(self):
-        return self.__id_cliente
+    def id_usuario(self):
+        return self.__id_usuario
 
-    @id_cliente.setter
-    def id_cliente(self, valor):
-        self.__id_cliente = valor
+    @id_usuario.setter
+    def id_usuario(self, valor):
+        self.__id_usuario = valor
 
     @property
     def lista_productos(self):
@@ -32,13 +32,13 @@ class Pedido:
     def lista_productos(self, valor):
         self.__lista_productos = valor
 
-    @property
-    def total(self):
-        return self.__total
+    # @property
+    # def total(self):
+    #     return self.__total
 
-    @total.setter
-    def total(self, valor):
-        self.__total = valor
+    # @total.setter
+    # def total(self, valor):
+    #     self.__total = valor
 
     @property
     def fecha(self):
@@ -47,6 +47,15 @@ class Pedido:
     @fecha.setter
     def fecha(self, valor):
         self.__fecha = valor
+
+    
+    @property
+    def formato_dict(self): #Lo que se sube
+        return {
+            "id_usuario": self.id_usuario,
+            "productos": self.lista_productos,
+            "fecha": self.fecha
+        }
 
 
     

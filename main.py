@@ -7,7 +7,8 @@ admin = Administrador("Francisco", "TecnoMarket")
 # listado_productos = base_datos.buscar("productos")
 
 
-
+usuario = Usuario(120, "21", "paco", "cortes", "123")
+usuario.realizar_pedido()
 
 
 # listado_clientes = [

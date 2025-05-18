@@ -12,8 +12,10 @@
 
         <br><br>
         {% include 'partials/_productos.html' %}
+        <div class="ver-mas"><a href="{{ url_for('productos') }}">Ver más ➜</a></div>
 
         <br><br>
         {% include 'partials/_usuarios.html' %}
+        <div class="ver-mas"><a href="{{ url_for('usuarios') }}">Ver más ➜</a></div>
     </div>
 {% endblock %}

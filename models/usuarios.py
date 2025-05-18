@@ -1,4 +1,6 @@
 from models.pedidos import Pedido
+from datetime import date, datetime
+from models.base_datos import base_datos
 
 class Usuario:
 
@@ -9,7 +11,7 @@ class Usuario:
         self.__contraseña = contraseña
         self.__fecha_registro = fecha_registro
         self.__estado = True #añadir aleatorio
-        self.__pedidos = []
+        self.__carrito = ["682658d17079f8b17d9e6f85", "68265ae0787592c74399edc3"] #Guada los productos que se añadiran al pedido
 
     @property
     def id_usuario(self):
@@ -60,16 +62,22 @@ class Usuario:
         self.__estado = valor
 
     @property
-    def pedidos(self):
-        return self.__pedidos
+    def carrito(self):
+        return self.__carrito
 
-    @pedidos.setter
-    def pedidos(self, valor):
-        self.__pedidos = valor
+    @carrito.setter
+    def carrito(self, valor):
+        self.__carrito = valor
 
 
-    def agregar_pedido(self, id_pedido:int, lista_productos:list):
-        self.__pedidos.append(Pedido(id_pedido, self.id_usuario, lista_productos))
+    def realizar_pedido(self):
+        # Creo el objeto del pedido
+        pedido = Pedido(0, self.id_usuario, self.carrito, datetime.now())
+
+        #Subo el pedido
+        base_datos.insertar("pedidos", pedido.formato_dict)
+
+
 
     @property
     def formato_dict(self): #Eso es lo que se sube a la bd

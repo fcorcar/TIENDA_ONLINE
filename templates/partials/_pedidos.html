@@ -1,0 +1,15 @@
+<div id="pag-usuarios">
+    <h2 class="titulo-global">{{titulo_us}}</h2>
+    <div id="contenedor-usuarios">
+        {% for pedido in listado_pedidos %}
+            <div class="usuario-card">
+                <h3>{{pedido.id_pedido}}</h3>
+                <span><b>ID usuario:</b> {{pedido.id_usuario}}</span>
+                <span><b>Productos:</b> {{pedido.lista_productos|length}}</span>
+                <span><b>Fecha del pedido:</b> {{pedido.fecha|string | truncate(10, False, '')}}</span>
+
+            </div>
+        {% endfor %}
+    </div>
+</div>
+

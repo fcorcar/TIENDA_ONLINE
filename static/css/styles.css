@@ -71,6 +71,28 @@ h1, h2, h3 {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
+.ver-mas {
+    text-align: right;
+    margin-bottom: 2.2rem;
+    margin-top: 0.8rem;
+    
+    
+}
+.ver-mas a {
+    background-color: white;
+    padding: 1rem 5rem;
+    text-decoration: none;
+    color: #000000;
+    font-weight: bold;
+    font-size: 1.1rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.ver-mas a:hover {
+    text-decoration: underline;
+}
+
 /* ---------- PRODUCTOS ---------- */
 
 #pag-catalogo {
@@ -116,6 +138,7 @@ h1, h2, h3 {
     font-size: 1.2rem;
     color: #ffffff;
     margin-top: 1rem;
+    margin-bottom: 0.5rem;
     background-color: #1e2631;
     padding: 0.3rem;
     border-radius: 6px;
@@ -246,7 +269,7 @@ form input[type="submit"]:hover {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1.5rem;
-    padding-top: 1.5rem;
+    padding: 2rem 0;
 }
 
 .usuario-card {
