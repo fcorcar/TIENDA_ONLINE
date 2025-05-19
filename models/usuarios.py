@@ -72,15 +72,12 @@ class Usuario:
 
 
     def realizar_pedido(self):
-        # Creo el objeto del pedido
         pedido = Pedido(0, self.id_usuario, self.carrito, 0, datetime.now())
-
-        #Subo el pedido
         base_datos.insertar("pedidos", pedido.formato_dict)
 
 
     @property
-    def formato_dict(self): #Eso es lo que se sube a la bd
+    def formato_dict(self):
         return {
             "fecha_registro": self.fecha_registro,
             "nombre": self.nombre,

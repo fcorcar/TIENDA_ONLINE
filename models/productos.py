@@ -63,7 +63,7 @@ class Producto:
 
     
     @property
-    def formato_dict(self): #Eso es lo que se sube a la bd
+    def formato_dict(self):
         return {
             "nombre": self.nombre,
             "precio": self.precio,

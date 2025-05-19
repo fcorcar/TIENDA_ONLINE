@@ -57,7 +57,7 @@ class Pedido:
 
     
     @property
-    def formato_dict(self): #Lo que se sube
+    def formato_dict(self):
         return {
             "id_usuario": self.id_usuario,
             "productos": self.lista_productos,

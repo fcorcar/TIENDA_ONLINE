@@ -25,19 +25,37 @@
 ```
 TIENDA_ONLINE/
 ├── app.py
-├── main.py
+├── .env
 ├── settings.py
 ├── models/
-│   ├── basedatos.py
-│   ├── clientes.py
+│   ├── base_datos.py
+│   ├── usuarios.py
+│   ├── productos.py
 │   ├── pedidos.py
-│   ├── administrador.py
-│   └── base_datos.py
+│   └── administrador.py
 ├── static/
-│   └── css/
-│       └── style.css
+│   ├── css/
+│   │   └── style.css
+│   └── images/
+│       ├── 404.gif
+│       └── favicon.cio
 ├── templates/
-│   └── index.html
+│   ├── partials/
+│   │   ├── _añadir_producto.html
+│   │   ├── _detalle_producto.html
+│   │   ├── _pedidos.html
+│   │   ├── _productos.html
+│   │   ├── _registro_usuarios.html
+│   │   └── _usuarios_.html
+│   ├── añadir_producto.html
+│   ├── base.html
+│   ├── dashboard.html
+│   ├── detalle_producto.html
+│   ├── pedidos.html
+│   ├── productos.html
+│   ├── registro_usuarios.html
+│   ├── usuarios.html
+│   └── 404.html
 ├── requirements.txt
 └── README.md
 ```
