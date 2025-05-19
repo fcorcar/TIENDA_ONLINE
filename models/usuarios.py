@@ -1,6 +1,7 @@
 from models.pedidos import Pedido
-from datetime import date, datetime
+from datetime import datetime
 from models.base_datos import base_datos
+import random
 
 class Usuario:
 
@@ -10,8 +11,8 @@ class Usuario:
         self.__email = email
         self.__contraseña = contraseña
         self.__fecha_registro = fecha_registro
-        self.__estado = True #añadir aleatorio
-        self.__carrito = ["682658d17079f8b17d9e6f85", "68265ae0787592c74399edc3"] #Guada los productos que se añadiran al pedido
+        self.__estado = random.choice([True, False]) # Se implementaría con la versión del cliente
+        self.__carrito = ["6826609b787592c74399edca",] #Guada los productos que se añadirán al pedido
 
     @property
     def id_usuario(self):
@@ -72,11 +73,10 @@ class Usuario:
 
     def realizar_pedido(self):
         # Creo el objeto del pedido
-        pedido = Pedido(0, self.id_usuario, self.carrito, datetime.now())
+        pedido = Pedido(0, self.id_usuario, self.carrito, 0, datetime.now())
 
         #Subo el pedido
         base_datos.insertar("pedidos", pedido.formato_dict)
-
 
 
     @property

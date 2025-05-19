@@ -3,7 +3,6 @@ from dotenv import load_dotenv
 import os
 
 
-
 ##################### CONFIGURACIONES #####################
 # Carga las variables de entorno
 load_dotenv()

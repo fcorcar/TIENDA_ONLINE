@@ -1,12 +1,19 @@
-from flask import Flask, render_template, request, redirect
-from main import admin
+from flask import Flask, render_template, request
 from datetime import date, datetime
 from models.productos import Producto
 from models.usuarios import Usuario
 from models.base_datos import base_datos
 from models.pedidos import Pedido
+from bson import ObjectId
+
+from models.administrador import Administrador
 
 app = Flask(__name__)
+
+admin = Administrador("Francisco", "TecnoMarket")
+# usuarios = base_datos.obtener("usuarios", Usuario) # Crea un pedido, se implementa en la version del cliente
+# usuarios[2].realizar_pedido()
+
 
 @app.errorhandler(404)
 def error404(error):
@@ -27,7 +34,17 @@ def panel_control():
     # Usuarios
     listado_usuarios = base_datos.obtener_ultimos("usuarios", Usuario, 3)
 
-    return render_template("dashboard.html", **kwargs, titulo_pr="Productos añadidos recientemente", listado_productos=listado_productos, titulo_us="Usuarios registrados recientemente", listado_usuarios=listado_usuarios)
+    # Pedidos
+    if request.method == "POST":
+        id_pedido = request.form["id"]
+        pedido = base_datos.obtener("pedidos", Pedido, {"_id": ObjectId(id_pedido)})
+        ids_prod = [ObjectId(id_str) for id_str in pedido[0].lista_productos]
+        productos = base_datos.obtener("productos", Producto, {"_id": {"$in": ids_prod}})
+        return render_template("productos.html", titulo_pr=f"Productos del pedido '{id_pedido}'", listado_productos=productos)
+
+    listado_pedidos = base_datos.obtener_ultimos("pedidos", Pedido, 3)
+
+    return render_template("dashboard.html", **kwargs, titulo_pr="Productos añadidos recientemente", listado_productos=listado_productos, titulo_us="Usuarios registrados recientemente", listado_usuarios=listado_usuarios, titulo_pe=f"Últimos pedidos", listado_pedidos=listado_pedidos)
 
 @app.route("/añadir-producto", methods=["GET", "POST"])
 def añadir_producto():
@@ -84,82 +101,23 @@ def registrar_usuarios():
 @app.route("/usuarios")
 def usuarios():
     listado_usuarios = base_datos.obtener("usuarios", Usuario)
-
     usuarios_activos = sum(1 for usuario in listado_usuarios if usuario.estado)
 
-    usuario_top = ""
-    # max_pedidos = -1
-
-    # for usuario in listado_usuarios:
-    #     num_pedidos = len(usuario.pedidos)
-    #     if num_pedidos > max_pedidos:
-    #         max_pedidos = num_pedidos
-    #         usuario_top = usuario.nombre
-
-    return render_template("usuarios.html", titulo_us=f"Usuarios (Activos: {usuarios_activos}) (Usuario Top: {usuario_top})", listado_usuarios=listado_usuarios)
+    return render_template("usuarios.html", titulo_us=f"Usuarios (Activos: {usuarios_activos})", listado_usuarios=listado_usuarios)
 
 
-@app.route("/pedidos")
+@app.route("/pedidos", methods=["GET", "POST"])
 def pedidos():
+    if request.method == "POST":
+        id_pedido = request.form["id"]
+        pedido = base_datos.obtener("pedidos", Pedido, {"_id": ObjectId(id_pedido)})
+        ids_prod = [ObjectId(id_str) for id_str in pedido[0].lista_productos]
+        productos = base_datos.obtener("productos", Producto, {"_id": {"$in": ids_prod}})
+        return render_template("productos.html", titulo_pr=f"Productos del pedido '{id_pedido}'", listado_productos=productos)
+
     listado_pedidos = base_datos.obtener("pedidos", Pedido)
+    return render_template("pedidos.html", titulo_pe=f"Pedidos", listado_pedidos=listado_pedidos)
 
-    return render_template("pedidos.html", titulo_us=f"Pedidos", listado_pedidos=listado_pedidos)
-
-# @app.route("/")
-# def inicio():
-#     kwargs = {
-#         "pagina": "inicio",
-#         "nombre_admin": admin.nombre,
-#         "tienda": admin.tienda,
-#         "fecha": date.today()
-#     }
-    
-#     return render_template("dashboard.html", **kwargs)
-
-# @app.route("/catalogo")
-# def catalogo():
-#     listado_productos = base_datos.buscar("productos")
-
-#     total_stock = sum(producto["stock"] for producto in listado_productos)
-#     return render_template("dashboard.html", pagina="catalogo", listado_productos=listado_productos, total_stock=total_stock)
-
-# @app.route("/clientes")
-# def clientes():
-#     clientes_activos = sum(1 for cliente in listado_clientes if cliente.estado)
-
-#     cliente_top = ""
-#     max_pedidos = -1
-
-#     for cliente in listado_clientes:
-#         num_pedidos = len(cliente.pedidos)
-#         if num_pedidos > max_pedidos:
-#             max_pedidos = num_pedidos
-#             cliente_top = cliente.nombre
-
-#     return render_template("dashboard.html", pagina="clientes", listado_clientes=listado_clientes, clientes_activos=clientes_activos, cliente_top=cliente_top)
-
-# @app.route("/pedidos")
-# def pedidos():
-#     suma_total = sum(pedido.total for cliente in listado_clientes for pedido in cliente.pedidos)        
-#     return render_template("dashboard.html", pagina="pedidos", listado_clientes=listado_clientes, suma_total=suma_total)
-
-# @app.route("/añadir-producto", methods=["GET", "POST"])
-# def añadir_producto():   
-#     if request.method == "POST":
-#         producto = Producto(0, request.form["nombre"], float(request.form["precio"]), int(request.form["stock"]), request.form["categoria"], request.form["url_imagen"])
-        
-#         producto_dict = {
-#             "nombre": producto.nombre,
-#             "precio": producto.precio,
-#             "stock": producto.stock,
-#             "categoria": producto.categoria,
-#             "imagen": producto.img_url
-#         }
-
-#         base_datos.insertar("productos", producto_dict)
-
-#         return redirect("/catalogo")
-#     return render_template("dashboard.html", pagina="añadir-producto")
 
 
 if __name__ == "__main__":

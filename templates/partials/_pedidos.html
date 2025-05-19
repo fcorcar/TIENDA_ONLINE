@@ -1,5 +1,5 @@
 <div id="pag-usuarios">
-    <h2 class="titulo-global">{{titulo_us}}</h2>
+    <h2 class="titulo-global">{{titulo_pe}}</h2>
     <div id="contenedor-usuarios">
         {% for pedido in listado_pedidos %}
             <div class="usuario-card">
@@ -7,7 +7,10 @@
                 <span><b>ID usuario:</b> {{pedido.id_usuario}}</span>
                 <span><b>Productos:</b> {{pedido.lista_productos|length}}</span>
                 <span><b>Fecha del pedido:</b> {{pedido.fecha|string | truncate(10, False, '')}}</span>
-
+                <span><b>Total:</b> {{pedido.total_format}}€</span>
+                <form class="form-pedido" action="/pedidos" method="POST">
+                    <button type="submit" name="id" value="{{pedido.id_pedido}}">Ver productos</button>
+                </form>
             </div>
         {% endfor %}
     </div>

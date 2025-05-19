@@ -1,7 +1,6 @@
 ######################## IMPORTACIONES ########################
 from settings import obtener_bd
 from pymongo import MongoClient, DESCENDING
-from models.productos import Producto
 
 
 
